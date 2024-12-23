@@ -22,6 +22,24 @@ body {
   place-content: center;
 }
 
+.invisible {
+  opacity: 0 !important;
+}
+
+.off-overlay {
+  display: grid;
+  opacity: 0;
+  width: 100dvw;
+  height: 100dvh;
+  pointer-events: none;
+  position: fixed;
+  place-items: center;
+}
+
+.on {
+  opacity: 1
+}
+
 img {
   opacity: 0;
 }
@@ -53,11 +71,16 @@ img {
   font-family: "Nunito Sans", sans-serif;
   text-align: left;
 }
+
+#artist {
+  color: hsl(0, 0%, 80%);
+}
+
 .info > h1,
 .info > h2,
 .info > h3 {
   margin: 0;
-  line-height: 25px;
+  line-height: 100%;
 }
 
 /* .window,
@@ -255,6 +278,6 @@ img {
   .info > h2,
   .info > h3 {
     margin: 0;
-    line-height: 25px;
+    line-height: 100%;
   }
 }

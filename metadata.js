@@ -5,17 +5,19 @@ const text = document.getElementById("metadata");
 
 const song = document.getElementById("song");
 const artist = document.getElementById("artist");
+const online = document.getElementById("online-overlay");
 let currentSong = {
   name: "",
   artist: "",
   cover: "",
+  isPlaying: false,
 };
 
 let initLoad = true;
 let prevsURL = 0;
 
 myImage.onload = () => {
-  handleChangeSong();
+  handleUpdateSong();
 };
 
 const getUserRecent = async (user) => {
@@ -38,9 +40,22 @@ const getUserRecent = async (user) => {
   }
 };
 
+const isPlaying = async (data) => {
+  const value =
+    (await data.recenttracks.track[0]["@attr"]?.nowplaying) == "true";
+  console.log(value);
+  return value;
+};
+
 const handleRefreshDisplay = async () => {
   const data = await getUserRecent("onofel");
   const URL = data.recenttracks.track[0].url;
+  const nowPlaying = await isPlaying(data);
+
+  if (currentSong.isPlaying != nowPlaying) {
+    currentSong = { ...currentSong, isPlaying: nowPlaying };
+    handleUpdateSong();
+  }
 
   console.log(URL);
   // check if it is the same song
@@ -51,7 +66,12 @@ const handleRefreshDisplay = async () => {
   const artistName = data.recenttracks.track[0].artist["#text"];
   const cover = data.recenttracks.track[0].image[3]["#text"];
 
-  currentSong = { song: songName, artist: artistName, cover: cover };
+  currentSong = {
+    song: songName,
+    artist: artistName,
+    cover: cover,
+    isPlaying: nowPlaying,
+  };
 
   //   console.log(cover);
   myImage.src = currentSong.cover;
@@ -62,8 +82,24 @@ const handleRefreshDisplay = async () => {
 //   artist.innerText = artistname;
 // };
 
-const handleChangeSong = () => {
-  const { song: songname, artist: artistname, cover } = currentSong;
+const handleUpdateSong = () => {
+  const { song: songname, artist: artistname, cover, isPlaying } = currentSong;
+
+  // console.log(isPlaying);
+
+  if (!isPlaying) {
+    primaryImage.classList.add("invisible");
+    backgroundImage.classList.add("invisible");
+    text.classList.add("invisible");
+    online.classList.add("on");
+    console.log("playback stopped");
+  } else {
+    primaryImage.classList.remove("invisible");
+    backgroundImage.classList.remove("invisible");
+    text.classList.remove("invisible");
+    online.classList.remove("on");
+    console.log("playback resumed");
+  }
 
   handleAnimationFadeOut();
   setTimeout(
