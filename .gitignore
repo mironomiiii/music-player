@@ -1,0 +1,5 @@
+.env
+.prettierrc
+thing.json
+metadata copy.js
+thing/*
