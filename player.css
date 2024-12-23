@@ -44,6 +44,19 @@ img {
   opacity: 0;
 }
 
+#songLink {
+  position: absolute;
+  text-decoration: none;
+  bottom: 0;
+  font-size: 20px;
+  color: hsl(226, 60%, 52%);
+  font-weight: bolder;
+  transition: text-shadow 0.5s ease-in-out;
+}
+
+#songLink:hover {
+  text-shadow: 0px 0px 2px white;
+}
 /* music window */
 .music-player {
   width: min-content;
@@ -73,7 +86,7 @@ img {
 }
 
 #artist {
-  color: hsl(0, 0%, 80%);
+  color: hsl(0, 0%, 80%) !important;
 }
 
 .info > h1,
@@ -245,6 +258,14 @@ img {
   .window {
     height: 200px;
     width: 200px;
+  }
+
+  #songLink {
+    position: relative;
+    text-decoration: none;
+    bottom: 0;
+    font-size: 20px;
+  
   }
 
   img .info {

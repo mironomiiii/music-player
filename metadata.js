@@ -5,12 +5,14 @@ const text = document.getElementById("metadata");
 
 const song = document.getElementById("song");
 const artist = document.getElementById("artist");
+const songlinkege = document.getElementById("songLink");
 const online = document.getElementById("online-overlay");
 let currentSong = {
   name: "",
   artist: "",
   cover: "",
   isPlaying: false,
+  songlink: ""
 };
 
 let initLoad = true;
@@ -65,12 +67,14 @@ const handleRefreshDisplay = async () => {
   const songName = data.recenttracks.track[0].name;
   const artistName = data.recenttracks.track[0].artist["#text"];
   const cover = data.recenttracks.track[0].image[3]["#text"];
+  const link = data.recenttracks.track[0].url;
 
   currentSong = {
     song: songName,
     artist: artistName,
     cover: cover,
     isPlaying: nowPlaying,
+    songlink: link,
   };
 
   //   console.log(cover);
@@ -83,7 +87,7 @@ const handleRefreshDisplay = async () => {
 // };
 
 const handleUpdateSong = () => {
-  const { song: songname, artist: artistname, cover, isPlaying } = currentSong;
+  const { song: songname, artist: artistname, cover, isPlaying, songlink } = currentSong;
 
   // console.log(isPlaying);
 
@@ -105,6 +109,7 @@ const handleUpdateSong = () => {
   setTimeout(
     () => {
       initLoad = false;
+      songlinkege.href = songlink
       song.innerText = songname;
       artist.innerText = artistname;
       handleAnimationFadeIn();
