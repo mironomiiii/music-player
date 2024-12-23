@@ -21,7 +21,13 @@ myImage.onload = () => {
 const getUserRecent = async (user) => {
   URL = `http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${user}&api_key=b956d838d88dca005908329670ad0f3c&limit=1&format=json`;
   try {
-    const response = await fetch(URL);
+    const response = await fetch(URL, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
     if (!response.ok) {
       throw new Error("could not fetch");
     }
